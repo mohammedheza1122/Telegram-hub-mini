@@ -1,0 +1,19 @@
+---
+
+## 📄 ملف `vercel.json`
+```json
+{
+  "version": 2,
+  "builds": [
+    { "src": "src/pages/**/*.html", "use": "@vercel/static" },
+    { "src": "src/styles/**/*.css", "use": "@vercel/static" },
+    { "src": "src/scripts/**/*.js", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/", "dest": "src/pages/index.html" },
+    { "src": "/market", "dest": "src/pages/market.html" },
+    { "src": "/profile", "dest": "src/pages/profile.html" },
+    { "src": "/admin", "dest": "src/pages/admin.html" },
+    { "src": "/ads", "dest": "src/pages/ads.html" }
+  ]
+}
