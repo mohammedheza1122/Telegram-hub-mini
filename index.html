@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>ميني تطبيق تيليجرام</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 40px; }
+    button { padding: 10px 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>🎉 أهلاً بك في ميني التطبيق</h1>
+  <p id="user"></p>
+  <button onclick="sendData()">إرسال بيانات للبوت</button>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    document.getElementById("user").innerText =
+      "المستخدم: " + tg.initDataUnsafe?.user?.first_name;
+
+    function sendData() {
+      tg.sendData("✅ ضغط الزر داخل الميني تطبيق!");
+    }
+
+    tg.expand(); // يفتح التطبيق بكامل الشاشة
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telegram Hub Mini</title>
+
+  <!-- خطوط وأيقونات -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- أيقونات -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+<body>
+
+  <!-- رأس الصفحة -->
+  <header>
+    <h1>Telegram Hub Mini</h1>
+    <p>سوق القنوات + الصفحة العامة</p>
+  </header>
+
+  <!-- شريط تنقل -->
+  <nav class="navbar">
+    <button class="nav-btn" data-page="home"><i class="fas fa-home"></i> الرئيسية</button>
+    <button class="nav-btn" data-page="market"><i class="fas fa-store"></i> السوق</button>
+    <button class="nav-btn" data-page="posts"><i class="fas fa-users"></i> الصفحة العامة</button>
+    <button class="nav-btn" data-page="profile"><i class="fas fa-user"></i> حسابي</button>
+  </nav>
+
+  <!-- محتوى الصفحة -->
+  <main id="main-content">
+
+    <!-- الصفحة الرئيسية -->
+    <section id="home" class="page active">
+      <h2>مرحباً بك في Telegram Hub Mini</h2>
+      <p>اكتشف القنوات، انشر منشوراتك، وقم ببيع وشراء القنوات بسهولة!</p>
+    </section>
+
+    <!-- السوق -->
+    <section id="market" class="page">
+      <h2>سوق القنوات</h2>
+      <div class="cards-container">
+        <!-- مثال بطاقة قناة -->
+        <div class="card">
+          <img src="https://via.placeholder.com/100" alt="Channel Logo">
+          <h3>قناة ترفيهية</h3>
+          <p>عدد المشتركين: 12,500</p>
+          <p>تقييم AI: 4.5/5</p>
+          <button class="buy-btn">شراء / تفاوض</button>
+        </div>
+        <!-- يمكن تكرار البطاقات ديناميكياً عبر JS -->
+      </div>
+    </section>
+
+    <!-- الصفحة العامة -->
+    <section id="posts" class="page">
+      <h2>الصفحة العامة</h2>
+      <div class="post-form">
+        <textarea id="post-input" placeholder="اكتب منشورك هنا..."></textarea>
+        <button id="post-btn">نشر</button>
+      </div>
+      <div class="posts-container">
+        <!-- منشورات المستخدمين تظهر هنا -->
+      </div>
+    </section>
+
+    <!-- الملف الشخصي -->
+    <section id="profile" class="page">
+      <h2>حسابي</h2>
+      <p>اسم المستخدم: <span id="user-name">غير معروف</span></p>
+      <p>عدد القنوات المملوكة: <span id="user-channels">0</span></p>
+      <p>رصيد التطبيق: <span id="user-balance">0$</span></p>
+    </section>
+
+  </main>
+
+  <!-- سكربت Telegram WebApp + التنقل -->
+  <script src="app.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telegram Hub Mini</title>
+<style>
+  /* ===== تصميم عام ===== */
+  body {
+    font-family: 'Cairo', sans-serif;
+    margin: 0;
+    padding: 0;
+    direction: rtl;
+    background: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
+    color: #333;
+  }
+
+  /* ===== الهيدر ===== */
+  header {
+    background: linear-gradient(135deg, #0088ff, #00d4ff);
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  header h1 { margin: 0; font-size: 28px; }
+  header p { margin: 5px 0 0 0; font-size: 16px; }
+
+  /* ===== شريط التنقل ===== */
+  .navbar {
+    display: flex;
+    justify-content: space-around;
+    background: #00aaff;
+    padding: 12px 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  .nav-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s;
+  }
+  .nav-btn:hover { transform: scale(1.1); color: #ffd700; }
+
+  /* ===== الصفحات ===== */
+  .page { display: none; padding: 20px; }
+  .page.active { display: block; }
+
+  /* ===== منشورات المستخدم ===== */
+  .post-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .post-form textarea {
+    width: 100%; height: 80px;
+    border-radius: 12px; border: 1px solid #ccc;
+    padding: 12px; font-size: 14px; resize: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .post-form button {
+    align-self: flex-end;
+    padding: 10px 18px;
+    background: #00d4ff;
+    color: #fff;
+    font-weight: bold;
+    border: none; border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .post-form button:hover { background: #0088ff; }
+  .post-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+
+  /* ===== سوق القنوات ===== */
+  .cards-container, .ads-container { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; }
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px;
+    width: 220px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
+  .card img { width: 100px; height: 100px; border-radius: 50%; margin-bottom: 10px; }
+  .card h3 { margin: 10px 0 5px; font-size: 16px; }
+  .card p { font-size: 13px; margin: 3px 0; }
+
+  .buy-btn, .boost-btn {
+    margin-top: 10px;
+    padding: 8px 14px;
+    border: none; border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    transition: all 0.3s;
+  }
+  .buy-btn { background: #00bfff; color: white; }
+  .buy-btn:hover { background: #0088ff; }
+  .boost-btn { background: #ffdd00; color: #333; }
+  .boost-btn:hover { background: #e6c200; }
+
+  .card.premium { border: 2px solid gold; box-shadow: 0 0 12px rgba(255,215,0,0.5); }
+  .card.boosted { border: 2px solid #00ffcc; box-shadow: 0 0 12px rgba(0,255,204,0.5); }
+
+  /* ===== الملف الشخصي ===== */
+  #profile { text-align: center; }
+  #profile span { font-weight: bold; color: #00bfff; }
+  #premium-btn {
+    padding: 10px 18px;
+    background: linear-gradient(to right, #ffd700, #ffcc00);
+    color: #333; font-weight: bold;
+    border: none; border-radius: 10px;
+    cursor: pointer; margin: 12px 0;
+    transition: background 0.3s;
+  }
+  #premium-btn:hover { background: linear-gradient(to right, #ffcc00, #e6b800); }
+
+  /* ===== الإعلانات ===== */
+  .ad-card { border: 2px dashed #ff6600; box-shadow: 0 0 10px rgba(255,102,0,0.3); padding: 14px; border-radius: 12px; }
+
+  /* ===== الإشعارات ===== */
+  .notification {
+    position: fixed;
+    top: 20px; left: 50%;
+    transform: translateX(-50%);
+    background-color: #00bfff; color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: 1000;
+    font-weight: bold;
+  }
+  .notification.success { background-color: #00c851; }
+  .notification.error { background-color: #ff4444; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Telegram Hub Mini</h1>
+  <p>سوق القنوات وواجهة المستخدم الذكية</p>
+</header>
+
+<div class="navbar">
+  <button class="nav-btn" data-page="home">الرئيسية</button>
+  <button class="nav-btn" data-page="market">السوق</button>
+  <button class="nav-btn" data-page="profile">ملفي</button>
+</div>
+
+<div id="home" class="page active">
+  <h2>الصفحة العامة</h2>
+  <div class="post-form">
+    <textarea id="post-input" placeholder="اكتب منشورك هنا..."></textarea>
+    <button id="post-btn">نشر</button>
+  </div>
+  <div class="posts-container"></div>
+</div>
+
+<div id="market" class="page">
+  <h2>سوق القنوات</h2>
+  <div class="cards-container"></div>
+  <div class="ads-container"></div>
+</div>
+
+<div id="profile" class="page">
+  <h2>ملفي الشخصي</h2>
+  <button id="premium-btn">تفعيل Premium</button>
+  <p>مرحبا <span id="username">المستخدم</span></p>
+</div>
+
+<script>
+  // ===== JS كامل =====
+  const tg = window.Telegram.WebApp;
+  tg.expand();
+
+  const navButtons = document.querySelectorAll(".nav-btn");
+  const pages = document.querySelectorAll(".page");
+  navButtons.forEach(btn => btn.addEventListener("click", () => {
+    const target = btn.getAttribute("data-page");
+    pages.forEach(p => p.classList.toggle("active", p.id === target));
+  }));
+
+  function showNotification(msg, type = "info") {
+    const notif = document.createElement("div");
+    notif.classList.add("notification", type);
+    notif.textContent = msg;
+    document.body.appendChild(notif);
+    notif.style.opacity = 1;
+    setTimeout(() => { notif.style.opacity = 0; setTimeout(() => notif.remove(),500); }, 2500);
+  }
+
+  const postBtn = document.getElementById("post-btn");
+  const postInput = document.getElementById("post-input");
+  const postsContainer = document.querySelector(".posts-container");
+  postBtn.addEventListener("click", () => {
+    const content = postInput.value.trim();
+    if (!content) return alert("يرجى كتابة منشور قبل النشر.");
+    const postCard = document.createElement("div");
+    postCard.classList.add("post-card");
+    postCard.innerHTML = `<p>${content}</p>`;
+    postsContainer.prepend(postCard);
+    tg.sendData(JSON.stringify({ type: "new_post", content }));
+    postInput.value = "";
+    showNotification("تم نشر منشورك بنجاح!", "success");
+  });
+
+  const marketContainer = document.querySelector(".cards-container");
+  const channels = [
+    { name: "قناة ترفيهية", subscribers: 12500, rating: 4.5, premium: true, boosted: false },
+    { name: "قناة تعليمية", subscribers: 8300, rating: 4.7, premium: false, boosted: true },
+    { name: "قناة أخبارية", subscribers: 15600, rating: 4.2, premium: false, boosted: false }
+  ];
+
+  function aiPricing(channel) {
+    let base = channel.subscribers * 0.02;
+    let multiplier = channel.rating / 5;
+    let premium = channel.premium ? 1.3 : 1;
+    let boosted = channel.boosted ? 1.2 : 1;
+    return Math.round(base * multiplier * premium * boosted);
+  }
+
+  channels.forEach(channel => {
+    const card = document.createElement("div");
+    card.classList.add("card");
+    if(channel.premium) card.classList.add("premium");
+    if(channel.boosted) card.classList.add("boosted");
+    const price = aiPricing(channel);
+    card.setAttribute("data-price", price);
+    card.setAttribute("data-channel", channel.name);
+    card.innerHTML = `
+      <img src="https://via.placeholder.com/100" alt="${channel.name}">
+      <h3>${channel.name}</h3>
+      <p>عدد المشتركين: ${channel.subscribers.toLocaleString()}</p>
+      <p>تقييم AI: ${channel.rating}/5</p>
+      <p>السعر المقدر: ${price}$</p>
+      <button class="buy-btn">شراء / تفاوض</button>
+      <button class="boost-btn" data-channel="${channel.name}">تفعيل Boost</button>
+    `;
+    card.querySelector(".buy-btn").addEventListener("click", ()=>{
+      const channelName = card.getAttribute("data-channel");
+      tg.sendData(JSON.stringify({ type: "buy_channel", name: channelName, price }));
+      showNotification(`تم إرسال طلب شراء القناة "${channelName}"`);
+    });
+    card.querySelector(".boost-btn").addEventListener("click", ()=>{
+      const channelName = card.getAttribute("data-channel");
+      tg.sendData(JSON.stringify({ type: "boost
+       /* الخط الأساسي */
+body {
+  font-family: 'Cairo', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+  color: #333;
+}
+
+/* رأس الصفحة */
+header {
+  background-color: #0088cc;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+header p {
+  margin: 5px 0 0 0;
+  font-size: 14px;
+}
+
+/* شريط التنقل */
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #00aaff;
+  padding: 10px 0;
+}
+
+.navbar .nav-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navbar .nav-btn i {
+  font-size: 18px;
+  margin-bottom: 3px;
+}
+
+.navbar .nav-btn:hover {
+  color: #ffd700;
+}
+
+/* الصفحات */
+.page {
+  display: none;
+  padding: 20px;
+}
+
+.page.active {
+  display: block;
+}
+
+/* السوق - بطاقات القنوات */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 15px;
+  width: 200px;
+  text-align: center;
+}
+
+.card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.card h3 {
+  margin: 10px 0 5px 0;
+  font-size: 16px;
+}
+
+.card p {
+  font-size: 12px;
+  margin: 3px 0;
+}
+
+.card .buy-btn {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border: none;
+  background-color: #0088cc;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.card .buy-btn:hover {
+  background-color: #005f80;
+}
+
+/* الصفحة العامة - منشورات المستخدمين */
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.post-form textarea {
+  width: 100%;
+  height: 80px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  resize: none;
+  font-size: 14px;
+}
+
+.post-form button {
+  align-self: flex-end;
+  padding: 8px 15px;
+  background-color: #00aaff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.post-form button:hover {
+  background-color: #0088cc;
+}
+
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.post-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.post-card p {
+  margin: 0;
+  font-size: 13px;
+}
+
+/* الملف الشخصي */
+#profile {
+  text-align: center;
+}
+
+#profile span {
+  font-weight: bold;
+  color: #0088cc;
+}
+
+/* أزرار عامة */
+button {
+  transition: 0.3s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+/* style.css
+   تصميم حديث لميني تطبيق تيليجرام
+   ✨ يدعم RTL — جاهز للاستخدام مع Arabic interfaces
+*/
+
+/* ---------- متغيرات الألوان ---------- */
+:root{
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --primary: #2a9df4;      /* لون زر أساسي */
+  --primary-600: #2388d8;
+  --accent: #ffd166;
+  --glass: rgba(255,255,255,0.6);
+  --shadow: 0 6px 18px rgba(16,24,40,0.08);
+  --radius: 14px;
+  --text: #0f172a;
+  --success: #16a34a;
+  --danger: #ef4444;
+  --glass-border: rgba(255,255,255,0.4);
+  --transition: 220ms cubic-bezier(.2,.9,.3,1);
+  --max-width: 720px;
+}
+
+/* ثيم داكن تلقائي */
+@media (prefers-color-scheme: dark) {
+  :root{
+    --bg: #0b1220;
+    --card: rgba(12,17,25,0.7);
+    --muted: #9aa4b2;
+    --primary: #1e90ff;
+    --primary-600: #1877d1;
+    --accent: #f59e0b;
+    --glass: rgba(255,255,255,0.03);
+    --shadow: 0 6px 24px rgba(2,6,23,0.6);
+    --text: #e6eef8;
+    --glass-border: rgba(255,255,255,0.06);
+  }
+}
+
+/* ---------- قواعد عامة ---------- */
+*{box-sizing: border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: "Inter", "Noto Kufi Arabic", "Segoe UI", Tahoma, sans-serif;
+  background: linear-gradient(180deg, var(--bg), color-mix(in srgb, var(--bg) 92%, black 2%));
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  direction: rtl; /* مهم للواجهات العربية */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  gap:16px;
+}
+
+/* ---------- الحاوية المركزية ---------- */
+.app-shell{
+  width: min(96%, var(--max-width));
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.35));
+  backdrop-filter: blur(8px) saturate(110%);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  border: 1px solid var(--glass-border);
+  overflow:hidden;
+}
+
+/* رأس الصفحة */
+.app-header{
+  
+// --- Telegram WebApp ---
+const tg = window.Telegram.WebApp;
+tg.expand();
+console.log("Telegram Hub Mini WebApp Advanced Loaded!");
+
+// --- التنقل بين الصفحات ---
+const navButtons = document.querySelectorAll(".nav-btn");
+const pages = document.querySelectorAll(".page");
+
+navButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const target = btn.getAttribute("data-page");
+
+    pages.forEach(page => {
+      if (page.id === target) page.classList.add("active");
+      else page.classList.remove("active");
+    });
+  });
+});
+
+// --- نموذج منشورات المستخدم ---
+const postBtn = document.getElementById("post-btn");
+const postInput = document.getElementById("post-input");
+const postsContainer = document.querySelector(".posts-container");
+
+postBtn.addEventListener("click", () => {
+  const content = postInput.value.trim();
+  if (content === "") return alert("يرجى كتابة منشور قبل النشر.");
+
+  const postCard = document.createElement("div");
+  postCard.classList.add("post-card");
+  postCard.innerHTML = `<p>${content}</p>`;
+  postsContainer.prepend(postCard);
+
+  tg.sendData(JSON.stringify({ type: "new_post", content }));
+
+  postInput.value = "";
+  showNotification("تم نشر منشورك بنجاح!");
+});
+
+// --- الإشعارات داخل التطبيق ---
+function showNotification(message) {
+  const notif = document.createElement("div");
+  notif.classList.add("notification");
+  notif.textContent = message;
+  document.body.appendChild(notif);
+  notif.style.opacity = 1;
+
+  setTimeout(() => {
+    notif.style.opacity = 0;
+    setTimeout(() => notif.remove(), 500);
+  }, 2500);
+}
+
+// --- عرض القنوات في السوق مع AI + Premium + Boost ---
+const marketContainer = document.querySelector(".cards-container");
+
+// مثال بيانات القنوات
+const channels = [
+  { name: "قناة ترفيهية", subscribers: 12500, rating: 4.5, premium: true, boosted: false },
+  { name: "قناة تعليمية", subscribers: 8300, rating: 4.7, premium: false, boosted: true },
+  { name: "قناة أخبارية", subscribers: 15600, rating: 4.2, premium: false, boosted: false }
+];
+
+// دالة محاكاة AI لتسعير القناة
+function aiPricing(channel) {
+  // السعر يعتمد على عدد المشتركين والتقييم
+  let basePrice = channel.subscribers * 0.02;
+  let ratingMultiplier = channel.rating / 5;
+  let premiumBonus = channel.premium ? 1.3 : 1;
+  let boostedBonus = channel.boosted ? 1.2 : 1;
+
+  return Math.round(basePrice * ratingMultiplier * premiumBonus * boostedBonus);
+}
+
+channels.forEach(channel => {
+  const card = document.createElement("div");
+  card.classList.add("card");
+
+  if(channel.premium) card.classList.add("premium");
+  if(channel.boosted) card.classList.add("boosted");
+
+  const price = aiPricing(channel);
+
+  card.innerHTML = `
+    <img src="https://via.placeholder.com/100" alt="${channel.name}">
+    <h3>${channel.name}</h3>
+    <p>عدد المشتركين: ${channel.subscribers.toLocaleString()}</p>
+    <p>تقييم AI: ${channel.rating}/5</p>
+    <p>السعر المقدر: ${price}$</p>
+    <button class="buy-btn">شراء / تفاوض</button>
+  `;
+
+  card.querySelector(".buy-btn").addEventListener("click", () => {
+    tg.sendData(JSON.stringify({ type: "buy_channel", name: channel.name, price }));
+    showNotification(`تم إرسال طلب شراء القناة "${channel.name}"`);
+  });
+
+  marketContainer.appendChild(card);
+});
+ /* بطاقات Premium */
+.card.premium {
+  border: 2px solid gold;
+  box-shadow: 0 0 10px rgba(255,215,0,0.5);
+}
+
+/* بطاقات Boosted */
+.card.boosted {
+  border: 2px solid #00ffcc;
+  box-shadow: 0 0 10px rgba(0,255,204,0.5);
+}
+
+/* إشعارات داخل التطبيق */
+.notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #0088cc;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.5s;
+  z-index: 1000;
+}
+ // --- Telegram WebApp ---
+const tg = window.Telegram.WebApp;
+tg.expand();
+console.log("Telegram Hub Mini WebApp Advanced Loaded!");
+
+// --- التنقل بين الصفحات ---
+const navButtons = document.querySelectorAll(".nav-btn");
+const pages = document.querySelectorAll(".page");
+
+navButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const target = btn.getAttribute("data-page");
+
+    pages.forEach(page => {
+      if (page.id === target) page.classList.add("active");
+      else page.classList.remove("active");
+    });
+  });
+});
+
+// --- نموذج منشورات المستخدم ---
+const postBtn = document.getElementById("post-btn");
+const postInput = document.getElementById("post-input");
+const postsContainer = document.querySelector(".posts-container");
+
+postBtn.addEventListener("click", () => {
+  const content = postInput.value.trim();
+  if (content === "") return alert("يرجى كتابة منشور قبل النشر.");
+
+  const postCard = document.createElement("div");
+  postCard.classList.add("post-card");
+  postCard.innerHTML = `<p>${content}</p>`;
+  postsContainer.prepend(postCard);
+
+  tg.sendData(JSON.stringify({ type: "new_post", content }));
+
+  postInput.value = "";
+  showNotification("تم نشر منشورك بنجاح!");
+});
+
+// --- الإشعارات داخل التطبيق ---
+function showNotification(message) {
+  const notif = document.createElement("div");
+  notif.classList.add("notification");
+  notif.textContent = message;
+  document.body.appendChild(notif);
+  notif.style.opacity = 1;
+
+  setTimeout(() => {
+    notif.style.opacity = 0;
+    setTimeout(() => notif.remove(), 500);
+  }, 2500);
+}
+
+// --- عرض القنوات في السوق مع AI + Premium + Boost ---
+const marketContainer = document.querySelector(".cards-container");
+
+// مثال بيانات القنوات
+const channels = [
+  { name: "قناة ترفيهية", subscribers: 12500, rating: 4.5, premium: true, boosted: false },
+  { name: "قناة تعليمية", subscribers: 8300, rating: 4.7, premium: false, boosted: true },
+  { name: "قناة أخبارية", subscribers: 15600, rating: 4.2, premium: false, boosted: false }
+];
+
+// دالة محاكاة AI لتسعير القناة
+function aiPricing(channel) {
+  // السعر يعتمد على عدد المشتركين والتقييم
+  let basePrice = channel.subscribers * 0.02;
+  let ratingMultiplier = channel.rating / 5;
+  let premiumBonus = channel.premium ? 1.3 : 1;
+  let boostedBonus = channel.boosted ? 1.2 : 1;
+
+  return Math.round(basePrice * ratingMultiplier * premiumBonus * boostedBonus);
+}
+
+channels.forEach(channel => {
+  const card = document.createElement("div");
+  card.classList.add("card");
+
+  if(channel.premium) card.classList.add("premium");
+  if(channel.boosted) card.classList.add("boosted");
+
+  const price = aiPricing(channel);
+
+  card.innerHTML = `
+    <img src="https://via.placeholder.com/100" alt="${channel.name}">
+    <h3>${channel.name}</h3>
+    <p>عدد المشتركين: ${channel.subscribers.toLocaleString()}</p>
+    <p>تقييم AI: ${channel.rating}/5</p>
+    <p>السعر المقدر: ${price}$</p>
+    <button class="buy-btn">شراء / تفاوض</button>
+  `;
+
+  card.querySelector(".buy-btn").addEventListener("click", () => {
+    tg.sendData(JSON.stringify({ type: "buy_channel", name: channel.name, price }));
+    showNotification(`تم إرسال طلب شراء القناة "${channel.name}"`);
+  });
+
+  marketContainer.appendChild(card);
+});
+/* بطاقات Premium */
+.card.premium {
+  border: 2px solid gold;
+  box-shadow: 0 0 10px rgba(255,215,0,0.5);
+}
+
+/* بطاقات Boosted */
+.card.boosted {
+  border: 2px solid #00ffcc;
+  box-shadow: 0 0 10px rgba(0,255,204,0.5);
+}
+
+/* إشعارات داخل التطبيق */
+.notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #0088cc;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.5s;
+  z-index: 1000;
+} 
+/* بطاقات الإعلانات */
+.ad-card {
+  border: 2px dashed #ff6600;
+  box-shadow: 0 0 8px rgba(255,102,0,0.3);
+}
+
+/* زر Boost */
+.boost-btn {
+  padding: 5px 10px;
+  background-color: #00ffcc;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.boost-btn:hover {
+  background-color: #00bfa0;
+}
+
+/* زر Premium */
+#premium-btn {
+  padding: 8px 15px;
+  background-color: gold;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+#premium-btn:hover {
+  background-color: #ffcc00;
+} 
+/* الخط الأساسي */
+body {
+  font-family: 'Cairo', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+  color: #333;
+}
+
+header {
+  background-color: #0088cc;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+}
+
+header h1 { margin: 0; font-size: 24px; }
+header p { margin: 5px 0 0 0; font-size: 14px; }
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #00aaff;
+  padding: 10px 0;
+}
+
+.navbar .nav-btn {
+  background: none; border: none; color: white;
+  font-size: 14px; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center;
+}
+
+.navbar .nav-btn i { font-size: 18px; margin-bottom: 3px; }
+.navbar .nav-btn:hover { color: #ffd700; }
+
+.page { display: none; padding: 20px; }
+.page.active { display: block; }
+
+.cards-container, .posts-container, .ads-container {
+  display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;
+}
+
+/* بطاقات السوق والمنشورات */
+.card {
+  background-color: white; border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 15px; width: 200px; text-align: center;
+}
+.card img { width: 100px; height: 100px; border-radius: 50%; }
+.card h3 { margin: 10px 0 5px 0; font-size: 16px; }
+.card p { font-size: 12px; margin: 3px 0; }
+.card .buy-btn, .card .boost-btn {
+  margin-top: 10px; padding: 8px 12px; border: none;
+  border-radius: 6px; cursor: pointer; font-size: 13px;
+}
+.card .buy-btn { background-color: #0088cc; color: white; }
+.card .buy-btn:hover { background-color: #005f80; }
+.card .boost-btn { background-color: #00ffcc; color: #000; }
+.card .boost-btn:hover { background-color: #00bfa0; }
+
+/* بطاقات Premium وBoost */
+.card.premium { border: 2px solid gold; box-shadow: 0 0 10px rgba(255,215,0,0.5); }
+.card.boosted { border: 2px solid #00ffcc; box-shadow: 0 0 10px rgba(0,255,204,0.5); }
+
+/* منشورات الصفحة العامة */
+.post-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+.post-form textarea { width: 100%; height: 80px; border-radius: 8px; border: 1px solid #ccc; padding: 10px; font-size: 14px; resize: none; }
+.post-form button { align-self: flex-end; padding: 8px 15px; background-color: #00aaff; color: white; border: none; border-radius: 6px; cursor: pointer; }
+.post-form button:hover { background-color: #0088cc; }
+
+.post-card { background-color: white; border-radius: 10px; padding: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+.post-card p { margin: 0; font-size: 13px; }
+
+/* الملف الشخصي */
+#profile { text-align: center; }
+#profile span { font-weight: bold; color: #0088cc; }
+#premium-btn { padding: 8px 15px; background-color: gold; color: black; border: none; border-radius: 6px; cursor: pointer; margin: 10px 0; }
+#premium-btn:hover { background-color: #ffcc00; }
+
+/* الإعلانات */
+.ad-card { border: 2px dashed #ff6600; box-shadow: 0 0 8px rgba(255,102,0,0.3); }
+
+/* إشعارات */
+.notification {
+  position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+  background-color: #0088cc; color: white; padding: 10px 20px;
+  border-radius: 8px; opacity: 0; transition: opacity 0.5s; z-index: 1000;
+}
+.notification.success { background-color: #00c851; }
+.notification.error { background-color: #ff4444; } 
+  const tg = window.Telegram.WebApp;
+tg.expand();
+console.log("Telegram Hub Mini – Full Version Loaded!");
+
+// التنقل بين الصفحات
+const navButtons = document.querySelectorAll(".nav-btn");
+const pages = document.querySelectorAll(".page");
+navButtons.forEach(btn => btn.addEventListener("click", () => {
+  const target = btn.getAttribute("data-page");
+  pages.forEach(p => p.classList.toggle("active", p.id === target));
+}));
+
+// إشعارات
+function showNotification(message, type="info"){
+  const notif = document.createElement("div");
+  notif.classList.add("notification", type);
+  notif.textContent = message;
+  document.body.appendChild(notif);
+  notif.style.opacity = 1;
+  setTimeout(()=>{ notif.style.opacity=0; setTimeout(()=>notif.remove(),500); },2500);
+}
+
+// منشورات المستخدم
+const postBtn=document.getElementById("post-btn");
+const postInput=document.getElementById("post-input");
+const postsContainer=document.querySelector(".posts-container");
+postBtn.addEventListener("click",()=>{
+  const content=postInput.value.trim();
+  if(!content) return alert("يرجى كتابة منشور قبل النشر.");
+  const postCard=document.createElement("div");
+  postCard.classList.add("post-card");
+  postCard.innerHTML=`<p>${content}</p>`;
+  postsContainer.prepend(postCard);
+  tg.sendData(JSON.stringify({type:"new_post",content}));
+  postInput.value="";
+  showNotification("تم نشر منشورك بنجاح!","success");
+});
+
+// القنوات في السوق
+const marketContainer=document.querySelector(".cards-container");
+const channels=[
+  {name:"قناة ترفيهية",subscribers:12500,rating:4.5,premium:true,boosted:false},
+  {name:"قناة تعليمية",subscribers:8300,rating:4.7,premium:false,boosted:true},
+  {name:"قناة أخبارية",subscribers:15600,rating:4.2,premium:false,boosted:false}
+];
+function aiPricing(channel){
+  let basePrice=channel.subscribers*0.02;
+  let ratingMultiplier=channel.rating/5;
+  let premiumBonus=channel.premium?1.3:1;
+  let boostedBonus=channel.boosted?1.2:1;
+  return Math.round(basePrice*ratingMultiplier*premiumBonus*boostedBonus);
+}
+channels.forEach(channel=>{
+  const card=document.createElement("div");
+  card.classList.add("card");
+  if(channel.premium) card.classList.add("premium");
+  if(channel.boosted) card.classList.add("boosted");
+  const price=aiPricing(channel);
+  card.setAttribute("data-price",price);
+  card.setAttribute("data-channel",channel.name);
+  card.innerHTML=`
+    <img src="https://via.placeholder.com/100" alt="${channel.name}">
+    <h3>${channel.name}</h3>
+    <p>عدد المشتركين: ${channel.subscribers.toLocaleString()}</p>
+    <p>تقييم AI: ${channel.rating}/5</p>
+    <p>السعر المقدر: ${price}$</p>
+    <button class="buy-btn">شراء / تفاوض</button>
+    <button class="boost-btn" data-channel="${channel.name}">تفعيل Boost</button>
+  `;
+  card.querySelector(".buy-btn").addEventListener("click",()=>{
+    const userId=tg.initDataUnsafe.user.id;
+    const price=parseInt(card.getAttribute("data-price"));
+    const channelName=card.getAttribute("data-channel");
+    tg.sendData(JSON.stringify({type:"buy_channel",name:channelName,price}));
+    showNotification(`تم إرسال طلب شراء القناة "${channelName}"`);
+  });
+  card.querySelector(".boost-btn").addEventListener("click",()=>{
+    const channelName=card.getAttribute("data-channel");
+    tg.sendData(JSON.stringify({type:"boost_channel",name:channelName}));
+    showNotification(`تم تفعيل Boost للقناة "${channelName}"`);
+  });
+  marketContainer.appendChild(card);
+});
+
+// Premium
+const premiumBtn=document.getElementById("premium-btn");
+if(premiumBtn){
+  premiumBtn.addEventListener("click",()=>{
+    const userId=tg.initDataUnsafe.user.id;
+    tg.sendData(JSON.stringify({type:"subscribe_premium",userId}));
+    showNotification("تم تفعيل اشتراك Premium بنجاح!");
+  });
+}
+
+// الإعلانات
+function displayAds(ads){
+  const adContainer=document.querySelector(".ads-container");
+  if(!adContainer) return;
+  ads.forEach(ad=>{
+    const adCard=document.createElement("div");
+    adCard.classList.add("card","ad-card");
+    adCard.innerHTML=`
+      <img src="${ad.image}" alt="${ad.title}">
+      <h3>${ad.title}</h3>
+      <button onclick="window.open('${ad.link}','_blank')">عرض الإعلان</button>
+    `;
+    adContainer.appendChild(adCard);
+  });
+}
+const ads=[
+  {title:"اعلان مميز 1",image:"https://via.placeholder.com/100",link:"https://t.me"},
+  {title:"اعلان مميز 2",image:"https://via.placeholder.com/100",link:"https://t.me"}
+];
+displayAds(ads);
+  <!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telegram Hub Mini</title>
+<link rel="stylesheet" href="../styles/style.css">
+<script src="../scripts/main.js" defer></script>
+</head>
+<body>
+<header>
+  <h1>Telegram Hub Mini</h1>
+</header>
+
+<div id="navbar"></div>
+
+<div id="home" class="page active">
+  <h2>الصفحة الرئيسية</h2>
+  <div class="post-form">
+    <textarea id="post-input" placeholder="اكتب منشورك هنا..."></textarea>
+    <button id="post-btn">نشر</button>
+  </div>
+  <div class="posts-container"></div>
+  <div class="ads-container"></div>
+</div>
+
+</body>
+</html>
+  <!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سوق القنوات</title>
+<link rel="stylesheet" href="../styles/style.css">
+<script src="../scripts/main.js" defer></script>
+</head>
+<body>
+<header>
+  <h1>سوق القنوات</h1>
+</header>
+
+<div id="navbar"></div>
+
+<div class="cards-container"></div>
+<div class="ads-container"></div>
+
+</body>
+</html>
+  <!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ملفي الشخصي</title>
+<link rel="stylesheet" href="../styles/style.css">
+<script src="../scripts/main.js" defer></script>
+</head>
+<body>
+<header>
+  <h1>ملفي الشخصي</h1>
+</header>
+
+<div id="navbar"></div>
+
+<p>الاسم: <span id="username">المستخدم</span></p>
+<p>الرصيد الحالي: <span id="balance">0</span> $</p>
+<button id="premium-btn">تفعيل Premium (10$)</button>
+<div class="ads-container"></div>
+
+</body>
+</html>
+  <!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة الإدارة</title>
+<link rel="stylesheet" href="../styles/style.css">
+<script src="../scripts/main.js" defer></script>
+</head>
+<body>
+<header>
+  <h1>لوحة التحكم للإدارة</h1>
+</header>
+
+<div id="navbar"></div>
+
+<section id="channel-management">
+  <h2>إدارة القنوات</h2>
+  <button id="add-channel-btn">إضافة قناة جديدة</button>
+  <div class="cards-container"></div>
+</section>
+
+<section id="ads-management">
+  <h2>إدارة الإعلانات والترويج</h2>
+  <div class="add-ad-form">
+    <input type="text" id="ad-title" placeholder="عنوان الإعلان">
+    <select id="ad-type">
+      <option value="normal">عادي</option>
+      <option value="silver">فضي</option>
+      <option value="gold">ذهبي</option>
+    </select>
+    <input type="text" id="ad-link" placeholder="رابط الإعلان">
+    <button id="add-ad-btn">إضافة إعلان</button>
+  </div>
+  <div class="ads-container"></div>
+</section>
+</body>
+</html>
+  <!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telegram Hub Mini</title>
+<link rel="stylesheet" href="../styles/style.css">
+<script src="../scripts/main.js" defer></script>
+</head>
+<body>
+<header>
+  <h1>Telegram Hub Mini</h1>
+</header>
+
+<div id="navbar"></div>
+
+<div id="home" class="page active">
+  <h2>الصفحة الرئيسية</h2>
+  <div class="post-form">
+    <textarea id="post-input" placeholder="اكتب منشورك هنا..."></textarea>
+    <button id="post-btn">نشر</button>
+  </div>
+  <div class="posts-container"></div>
+  <div class="ads-container"></div>
+</div>
+
+</body>
+</html>
+  <!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سوق القنوات</title>
+<link rel="stylesheet" href="../styles/style.css">
+<script src="../scripts/main.js" defer></script>
+</head>
+<body>
+<header>
+  <h1>سوق القنوات</h1>
+</header>
+
+<div id="navbar"></div>
+
+<div class="cards-container"></div>
+<div class="ads-container"></div>
+
+</body>
+</html>
+  <!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ملفي الشخصي</title>
+<link rel="stylesheet" href="../styles/style.css">
+<script src="../scripts/main.js" defer></script>
+</head>
+<body>
+<header>
+  <h1>ملفي الشخصي</h1>
+</header>
+
+<div id="navbar"></div>
+
+<p>الاسم: <span id="username">المستخدم</span></p>
+<p>الرصيد الحالي: <span id="balance">0</span> $</p>
+<button id="premium-btn">تفعيل Premium (10$)</button>
+<div class="ads-container"></div>
+
+</body>
+</html>
+  <!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة الإدارة</title>
+<link rel="stylesheet" href="../styles/style.css">
+<script src="../scripts/main.js" defer></script>
+</head>
+<body>
+<header>
+  <h1>لوحة التحكم للإدارة</h1>
+</header>
+
+<div id="navbar"></div>
+
+<section id="channel-management">
+  <h2>إدارة القنوات</h2>
+  <button id="add-channel-btn">إضافة قناة جديدة</button>
+  <div class="cards-container"></div>
+</section>
+
+<section id="ads-management">
+  <h2>إدارة الإعلانات والترويج</h2>
+  <div class="add-ad-form">
+    <input type="text" id="ad-title" placeholder="عنوان الإعلان">
+    <select id="ad-type">
+      <option value="normal">عادي</option>
+      <option value="silver">فضي</option>
+      <option value="gold">ذهبي</option>
+    </select>
+    <input type="text" id="ad-link" placeholder="رابط الإعلان">
+    <button id="add-ad-btn">إضافة إعلان</button>
+  </div>
+  <div class="ads-container"></div>
+</section>
+</body>
+</html>
